@@ -1,4 +1,4 @@
-<!--A Design by W3layouts
+﻿<!--A Design by W3layouts
 Author: W3layout
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -55,7 +55,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 </div>
 </div>
-<!--main-->
+<!--main---->
 <div class="main_btm">
 <div class="wrap">
 <div class="main">
