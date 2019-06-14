@@ -403,7 +403,7 @@ tbody:hover tr:hover td {
                <td><input type="text" name="publisher" value= <%=iterator.next() %> required="required"></td>
                 <td> <input type="number" name="price" value= <%=iterator.next() %> required="required"></td>
                 <td> <input type="number" name="pages" value= <%=iterator.next() %> required="required"></td>
-                <td>   <input type="number" name="year" min="1900" max="2019" maxlength="4" title="Year should have 4 digit" value= <%=iterator.next() %> required="required"></td>
+                <td><input type="number" name="year" min="1900" max="2019" maxlength="4" title="Year should have 4 digit" value= <%=iterator.next() %> required="required"></td>
                 <td> <input type="number" name="copies" value= <%=iterator.next() %> required="required"></td>
                 <td>  <input type="number" name="available" value= <%=iterator.next() %> required="required"></td>
                 <td><input type="submit" value="Update"></td>

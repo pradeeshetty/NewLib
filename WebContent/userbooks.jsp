@@ -210,8 +210,6 @@ tbody:hover tr:hover td {
                  <% iterator.next(); %>
                 <td>  <%=iterator.next() %></td>
               
-<%--                 <input type="hidden" name="userid" value="<%=userid %>"> --%>
-<!--              <td><input type="submit" value="Request"></td> -->
 
                  </tr>
                 <br>
