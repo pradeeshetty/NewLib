@@ -91,7 +91,7 @@ tr:last-of-type td:last-child {
 }   
 
 tbody:hover td {
-    color: transparent;
+ 
     text-shadow: 0 0 3px #aaa;
 }
 
