@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.model.AddBook;
 import com.model.AddRequest;
 import com.model.Register;
@@ -14,58 +19,81 @@ public class DbConnection {
 	PreparedStatement preparedStatement = null;
 
 	public static Connection createConnection() {
-		Connection con = null;
-		String url = "jdbc:mysql://localhost:3306/library";
-		String username = "root";
-		String password = "root";
-		try {
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-			con = DriverManager.getConnection(url, username, password);
-			// System.out.println("Printing connection object "+con);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return con;
+		/*
+		 * Connection con = null; String url = "jdbc:mysql://localhost:3306/library";
+		 * String username = "root"; String password = "root"; try { try {
+		 * Class.forName("com.mysql.jdbc.Driver"); } catch (ClassNotFoundException e) {
+		 * e.printStackTrace(); } con = DriverManager.getConnection(url, username,
+		 * password); // System.out.println("Printing connection object "+con); } catch
+		 * (Exception e) { e.printStackTrace(); } return con;
+		 */
+		Connection conn = null;
+		 try {
+	            Context initContext = new InitialContext();
+	            Context envContext = (Context) initContext.lookup("java:comp/env");
+	            DataSource ds = (DataSource) envContext.lookup("jdbc/library");
+	             conn = ds.getConnection();
+	             System.out.println("conn "+conn);
+	          
+	            
+	          
+	        } catch (NamingException ex) {
+	            System.err.println(ex);
+	        } catch (SQLException ex) {
+	            System.err.println(ex);
+	        }
+		 return conn;
 	}
 
-	public void registerUser(Register registerBean) {
+	public int registerUser(Register registerBean) {
+		int i=0;
 		try {
 			con = DbConnection.createConnection();
-			String query = "insert into user(name,email,contact,password) values (?,?,?,?)";
+			String query = "insert into user(name,email,contact,password,flag) values (?,?,?,?,?)";
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, registerBean.getName());
 			preparedStatement.setString(2, registerBean.getEmail());
 			preparedStatement.setString(3, registerBean.getContact());
 			preparedStatement.setString(4, registerBean.getPassword());
+			preparedStatement.setInt(5, 0);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return i;
 
 	}
 
-	public boolean login(String email, String password) {
-		boolean isValid = false;
+	public int login(String email, String password) {
+		int flag = 0;
 		try {
 			con = DbConnection.createConnection();
-			String query = "select email,password from user where email=? and password=?";
+			String query = "select * from user where email=? and password=?";
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, email);
 			preparedStatement.setString(2, password);
 			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()) {
-				System.out.println("User login is valid in DB");
-				isValid = true;
+			System.out.println("inside login method ");
+			boolean isnext=rs.next();
+			System.out.println("is next "+isnext);
+			if(isnext==true)
+			{
+			if(rs.getInt("flag")==0){
+				System.out.println("User login ");
+				flag = 2;
 			}
+			else if(rs.getInt("flag")==1)
+			{
+				System.out.println("admin login ");
+				flag=1;
+			}
+			}
+			
 
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return isValid;
+		return flag;
 	}
 
 	public boolean emailexist(String email) {
@@ -551,8 +579,7 @@ public class DbConnection {
 			if (rs.next())
 				if (ad.getBookname().equals(rs.getString("bookname")) && ad.getAuthor().equals(rs.getString("author"))
 						&& ad.getPublisher().equals(rs.getString("publisher"))
-						&& ad.getPages().equals(rs.getString("pages")) && ad.getYear().equals(rs.getString("year"))
-						&& ad.getPrice().equals(rs.getString("price"))) {
+						) {
 
 					System.out.println("records exist");
 					// increment availability and copies
@@ -705,6 +732,7 @@ public class DbConnection {
 		 * ad.setYear("2014"); d.DuplicateBooks(ad);
 		 */
 		// d.denyduplicaterequest();
+		d.login("admin", "admin");
 
 	}
 

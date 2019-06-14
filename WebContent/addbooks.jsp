@@ -357,7 +357,7 @@
 	<div class="form-style-2-heading">Provide book information</div>
 	<form action="AddBooks" method="post">
 	<label for="field1"><span>Book Name <span class="required">*</span></span><input type="text" class="input-field" name="bookname" required="required" /></label>
-	<label for="field2"><span>Author <span class="required">*</span></span><input type="text" class="input-field" name="author" required /></label>
+	<label for="field2"><span>Author <span class="required">*</span></span><input type="text" class="input-field" pattern="[a-zA-Z\s]+" title="name should not contatin number or special character" name="author" required /></label>
 	<label for="field2"><span>Publisher <span class="required">*</span></span><input type="text" class="input-field" name="publisher" required /></label>
 	<label for="field2"><span>Price <span class="required">*</span></span><input type="number" class="input-field" name="price" required /></label>
 	<label for="field2"><span>Pages <span class="required">*</span></span><input type="number" class="input-field" name="pages" required /></label>

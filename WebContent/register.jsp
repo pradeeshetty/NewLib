@@ -55,7 +55,7 @@
                     <div class="login-form-body">
                         <div class="form-gp">
                             <label for="exampleInputName1">Full Name</label>
-                            <input type="text" id="exampleInputName1" name="name" required="required">
+                            <input type="text" id="exampleInputName1" name="name" pattern="[a-zA-Z\s]+" title="name should not contatin number or special character" required="required">
                             <i class="ti-user"></i>
                         </div>
                         <div class="form-gp">

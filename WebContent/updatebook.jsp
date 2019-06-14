@@ -13,6 +13,19 @@
          }
       }
    %>
+   
+   <script type="text/javascript">
+    function Validate() {
+        var copies = document.getElementById("copies").value;
+        var available = document.getElementById("available").value;
+        if (available>copies) {
+            alert("Available should be less than or equals to copies");
+            return false;
+        }
+        return true;
+    }
+</script>
+   
 <style>
 table {
     background: #f5f5f5;
@@ -100,7 +113,7 @@ tr:last-of-type td:last-child {
 }   
 
 tbody:hover td {
-    color: transparent;
+   
     text-shadow: 0 0 3px #aaa;
 }
 
@@ -148,7 +161,7 @@ tbody:hover tr:hover td {
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="index.html"><h2>Admin Dashboard</h2></a>
+                    <a href="admin.jsp"><h2>Admin Dashboard</h2></a>
                 </div>
             </div>
             <div class="main-menu">
@@ -399,14 +412,14 @@ tbody:hover tr:hover td {
                 <input type="hidden" name="bookid" value=<%=iterator.next() %>>
                  <tr>
               <td>  <input type="text" name="bookname" value= <%=iterator.next() %> required="required"></td>
-                  <td> <input type="text" name="author" value= <%=iterator.next() %> required="required"></td>
+                  <td> <input type="text" name="author" pattern="[a-zA-Z\s]+" title="name should not contatin number or special character" value= <%=iterator.next() %> required="required"></td>
                <td><input type="text" name="publisher" value= <%=iterator.next() %> required="required"></td>
                 <td> <input type="number" name="price" value= <%=iterator.next() %> required="required"></td>
                 <td> <input type="number" name="pages" value= <%=iterator.next() %> required="required"></td>
-                <td><input type="number" name="year" min="1900" max="2019" maxlength="4" title="Year should have 4 digit" value= <%=iterator.next() %> required="required"></td>
-                <td> <input type="number" name="copies" value= <%=iterator.next() %> required="required"></td>
-                <td>  <input type="number" name="available" value= <%=iterator.next() %> required="required"></td>
-                <td><input type="submit" value="Update"></td>
+                <td>   <input type="number" name="year" min="1900" max="2019" maxlength="4" title="Year should have 4 digit" value= <%=iterator.next() %> required="required"></td>
+                <td> <input type="number" id="copies" name="copies" value= <%=iterator.next() %> required="required"></td>
+                <td>  <input type="number" id="available" name="available" value= <%=iterator.next() %> required="required"></td>
+                <td><input type="submit" onclick="return Validate()" value="Update"></td>
                  </tr>
                 <br>
                   <% 
